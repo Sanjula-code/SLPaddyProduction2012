@@ -1,0 +1,18 @@
+data = read.csv("Lab.csv", header=TRUE);
+summary(data)
+
+counts <- table(data$Average.Yield.Kg.Ha,data$Season)
+barplot(counts, 
+main="Season", 
+xlab="Season", 
+ylab="Kg" ,
+col=c("darkblue","red"),
+legend = rownames(counts)) 
+
+counts <- table(data$Sown.000.Ha,data$Season)
+barplot(counts, 
+  main="Season vs Acres",
+  xlab="Season", ylab="Acres",
+  col=c("darkblue","red"), 
+  legend = rownames(counts)) 
+  
