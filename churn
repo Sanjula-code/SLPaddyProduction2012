@@ -1,0 +1,40 @@
+df = read.csv("churn.csv" , header=TRUE)
+
+install.packages("dplyr ")
+install.packages("caTools")
+
+library(dplyr)
+library(caTools)
+
+df <- df %>% mutate_if(is.character, as.factor)
+df$SeniorCitizen <- as.factor(df$SeniorCitizen)
+df %>% map(~ sum(is.na(.)))
+df <- df %>% select(-customerID)
+
+install.packages("caret")
+library(caret)
+
+inTrain <- createDataPartition(y = df$Churn, p=0.75, list=FALSE)
+# train/test split; 75%/25%
+
+train <- df[inTrain,]
+test <- df[-inTrain,]
+
+# fitting the model
+fit <- glm(Churn~., data=train, family=binomial)
+
+ # making predictions
+ churn.probs <- predict(fit, test, type="response"
+contrasts(df$Churn)
+
+install.packages("e1071")
+library(e1071)
+
+> # converting probabilities to "Yes" and "No" 
+glm.pred = rep("No", length(churn.probs))
+glm.pred[churn.probs > 0.5] = "Yes"
+glm.pred <- as.factor(glm.pred)
+
+# creating a confusion matrix
+confusionMatrix(glm.pred, test$Churn, positive = "Yes")
+
